@@ -162,8 +162,7 @@ public class FlumeNode implements Reportable {
     this.physicalNodeName = nodeName;
     rpcMan = rpc;
     instance = this;
-    // ntp 7/6/2011: Going to disable the agent webserver in all cases
-    this.startHttp = false; // startHttp;
+    this.startHttp = startHttp;
     this.nodesMan = new LogicalNodeManager(nodeName);
 
     File defaultDir = new File(conf.getAgentLogsDir(), getPhysicalNodeName());
