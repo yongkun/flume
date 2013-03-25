@@ -54,6 +54,8 @@ import com.cloudera.flume.handlers.endtoend.AckListener;
 import com.cloudera.flume.handlers.endtoend.CollectorAckListener;
 import com.cloudera.flume.handlers.text.FormatFactory;
 import com.cloudera.flume.handlers.text.FormatFactory.OutputFormatBuilder;
+import com.cloudera.flume.handlers.endtoend.AckDistributor;
+import com.cloudera.flume.handlers.endtoend.AckReceiver;
 import com.cloudera.flume.reporter.MasterReportPusher;
 import com.cloudera.flume.reporter.NodeReportResource;
 import com.cloudera.flume.reporter.ReportEvent;
@@ -123,6 +125,9 @@ public class FlumeNode implements Reportable {
 
   private final ChokeManager chokeMan;
 
+  private AckDistributor ackDistributor;
+  private AckReceiver ackReceiver;
+
   /**
    * A FlumeNode constructor with pluggable xxxManagers. This is used for
    * debugging and test cases. The http server is assumed not to be started, and
@@ -157,7 +162,8 @@ public class FlumeNode implements Reportable {
     this.physicalNodeName = nodeName;
     rpcMan = rpc;
     instance = this;
-    this.startHttp = startHttp;
+    // ntp 7/6/2011: Going to disable the agent webserver in all cases
+    this.startHttp = false; // startHttp;
     this.nodesMan = new LogicalNodeManager(nodeName);
 
     File defaultDir = new File(conf.getAgentLogsDir(), getPhysicalNodeName());
@@ -866,5 +872,18 @@ public class FlumeNode implements Reportable {
 
   public FlumeVMInfo getVMInfo() {
     return vmInfo;
+  }
+
+  public AckDistributor getAckDistributor() {
+    return ackDistributor;
+  }
+  public void setAckDistributor(AckDistributor ackDist) {
+    this.ackDistributor = ackDist;
+  }
+  public AckReceiver getAckReceiver() {
+    return ackReceiver;
+  }
+  public void setAckReceiver(AckReceiver receiver) {
+    this.ackReceiver = receiver;
   }
 }

@@ -36,6 +36,7 @@ import com.cloudera.flume.core.Event;
 import com.cloudera.flume.core.EventImpl;
 import com.cloudera.flume.core.EventSink;
 import com.cloudera.flume.handlers.thrift.ThriftFlumeEventServer.Client;
+import com.cloudera.flume.handlers.thrift.EventStatus;
 
 /**
  * This is a sink that sends events to a remote host/port. The event append rpc
